@@ -1,0 +1,49 @@
+.account {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 25px;
+  justify-content: space-between;
+  @media (max-width: 719px) {
+    flex-direction: column;
+    margin: auto;
+    min-width: 200px;
+  }
+  .infosContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .accountName {
+      font-size: 16px;
+      margin: 0;
+    }
+    .balance {
+      font-size: 40px;
+      font-weight: bold;
+      margin: 0;
+    }
+    .balanceStatus {
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+  .btn {
+    display: block;
+    width: 220px;
+    height: 45px;
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 35px;
+    border: none;
+    background-color: #00bc77;
+    color: #fff;
+    cursor: pointer;
+    @media (max-width: 719px) {
+      width: 100%;
+    }
+  }
+}
