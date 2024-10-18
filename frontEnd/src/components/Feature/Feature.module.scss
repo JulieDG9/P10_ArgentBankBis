@@ -1,0 +1,27 @@
+.banner {
+  box-sizing: border-box;
+  // width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 384px;
+  // width: 400px;
+  padding: 0 40px;
+  .feature {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 10px solid #00bc77;
+    padding: 1rem;
+    .iconFeature {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  h2 {
+    color: #222;
+    font-size: 20px;
+    padding: 8px 0;
+    margin-bottom: 0;
+  }
+}

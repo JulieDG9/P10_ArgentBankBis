@@ -1,0 +1,11 @@
+.featuresBlock {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+
+  @media (max-width: 919px) {
+    grid-template-columns: 1fr;
+  }
+}
