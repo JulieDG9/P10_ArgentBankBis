@@ -40,22 +40,6 @@ export const loginUser = async (email, password, rememberMe = false) => {
   }
 };
 
-// // Fonction pour inscrire un utilisateur (signup)
-// export const signupUser = async (firstname, lastname, email, password) => {
-//   try {
-//     const response = await axios.post(`${urlApi}/user/signup`, {
-//       firstname,
-//       lastname,
-//       email,
-//       password,
-//     });
-
-//     return response.data;
-//   } catch (error) {
-//     throw new Error("Échec de l'inscription");
-//   }
-// };
-
 // Fonction pour récupérer le profil utilisateur
 export const getUserProfile = async () => {
   try {
@@ -81,13 +65,19 @@ export const updateUserProfile = async (updatedData) => {
     console.log("Token récupéré :", token); // Vérifie si le token est récupéré
     if (!token) throw new Error("Utilisateur non authentifié");
 
-    const response = await axios.put(`${urlApi}/user/profile`, updatedData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    // const response = await axios.put(`${urlApi}/user/profile`, updatedData, {
+    const response = await axios.put(
+      `${urlApi}/user/profile`,
+      {
+        userName: updatedData.userName, // N'envoie que userName
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-    // lorsque que try et catch sont actifs, ça me deconnecte
     console.log("Réponse de l'API :", response.data); // Vérifie la réponse de l'API
     return response.data;
   } catch (error) {
@@ -95,46 +85,7 @@ export const updateUserProfile = async (updatedData) => {
       "Erreur lors de la mise à jour du profil utilisateur :",
       error
     );
-    alert("Erreur lors de la mise à jour du profil. Veuillez réessayer.");
 
-    if (error.response && error.response.status === 401) {
-      console.warn(
-        "Token invalide ou expiré, mais ne pas déconnecter automatiquement."
-      );
-    }
     throw new Error("Échec de la mise à jour du profil utilisateur");
-  }
-};
-
-// Fonction pour récupérer les comptes utilisateur
-export const fetchAccounts = async () => {
-  try {
-    const token = getToken();
-    if (!token) throw new Error("Utilisateur non authentifié");
-
-    const response = await axios.get(`${urlApi}/accounts`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return response.data; // axios gère la réponse JSON automatiquement
-  } catch (error) {
-    // Gérer l'erreur sans provoquer de déconnexion
-    console.error(
-      "Erreur lors de la mise à jour du profil utilisateur:",
-      error
-    );
-
-    // Affiche un message à l'utilisateur ici sans forcer la déconnexion
-    alert("Erreur lors de la mise à jour du profil. Veuillez réessayer.");
-    if (error.response && error.response.status === 401) {
-      console.warn(
-        "Token invalide ou expiré, mais ne pas déconnecter automatiquement."
-      );
-    }
-
-    // Si erreur 401, gére la situation sans forcer la déconnexion
-    throw new Error("Échec de la récupération des comptes");
   }
 };
