@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../features/userSlice";
 import styles from "./SignIn.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-// import { getUserProfile } from "../../api/api";
+import { loginUser } from "../../api/api";
+import { authSuccess, authRejected } from '../../app/slices/authSlice';
+
+
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -18,21 +20,15 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await dispatch(login({ email, password, rememberMe })).unwrap();
+      const responseLogin = await loginUser(email, password, rememberMe);
+      dispatch(authSuccess(responseLogin.body.token))
       navigate("/profile");
     } catch (error) {
+      dispatch(authRejected());
+      //TODO : Afficher l'erreur dans le formulaire (voir la deuxième todo de cette page)
       console.error("login failed", error);
     }
   };
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     await dispatch(getUserProfile({ email, password, rememberMe })).unwrap();
-  //     navigate("/profile");
-  //   } catch (error) {
-  //     console.error("login failed", error);
-  //   }
-  // };
 
   return (
     <>
@@ -72,7 +68,7 @@ export default function Login() {
             />
             <label htmlFor="rememberMe">Remember me</label>
           </div>
-
+          {/* TODO : Ajouter un message d'erreur caché du genre "Identifiants incorrects" */}
           <button type="submit" className={styles.btn}>
             Sign In
           </button>

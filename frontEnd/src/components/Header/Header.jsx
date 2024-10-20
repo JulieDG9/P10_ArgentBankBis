@@ -6,15 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { signOut } from "../../features/userSlice";
+import { authOut } from "../../app/slices/authSlice";
 
 export default function Header() {
-  const user = useSelector((state) => state.user.user);
-  console.log(user);
+  const token = useSelector((state) => state.auth.token);
+  const userName = "toto";//useSelector((state) => state.user.userName);
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
-    dispatch(signOut());
+    dispatch(authOut());
   };
 
   return (
@@ -24,22 +24,23 @@ export default function Header() {
           <img src={logo} alt="Logo ArgentBank" />
         </Link>
         <nav>
-          <FontAwesomeIcon icon={faCircleUser} />
-          {user ? (
-            <div>
-              <Link to="/profile" className={styles.userName}>
-                {user.userName || "Mister T"}
-              </Link>
-              <FontAwesomeIcon icon={faRightFromBracket} />
-              <button onClick={handleSignOut} className={styles.signOut}>
-                Sign Out
-              </button>
-            </div>
-          ) : (
-            <Link to="/signin" className={styles.signIn}>
-              Sign In
+        {token ? 
+          <>
+            <Link to="/profile">
+            <FontAwesomeIcon icon={faCircleUser} />
+              {userName}
             </Link>
-          )}
+            <Link to="/" className="link_SignOut" onClick={handleSignOut}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              Sign Out
+            </Link>
+          </>
+          :
+          <Link to="/signin" className={styles.signIn}>
+            <FontAwesomeIcon icon={faCircleUser} />
+            Sign In
+          </Link>
+        }
         </nav>
       </header>
     </div>

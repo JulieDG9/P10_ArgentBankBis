@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { updateProfile } from "../../features/userSlice";
 import styles from "./EditUser.module.scss";
 
 export default function EditUser() {
@@ -11,7 +10,11 @@ export default function EditUser() {
   const navigate = useNavigate(); // Pour naviguer entre les routes
 
   // Récupérer les informations de l'utilisateur depuis le store
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const currentUser = {
+    userName:"TEMP",
+    lastName: "FONTAINE",
+    firstName: "Laura"
+  };//useSelector((state) => state.user.currentUser);
 
   // État local pour gérer l'édition du nom d'utilisateur
   const [userName, setUserName] = useState(currentUser?.userName || "");
@@ -19,15 +22,10 @@ export default function EditUser() {
   const handleSave = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("bouton save cliqué");
-    // await dispatch(updateProfile({ userName })); // Envoie les nouvelles données
-    // navigate("/profile");
 
-    // Envoyer les nouvelles données au store Redux
+    
     try {
-      await dispatch(updateProfile({ userName }));
-
-      navigate("/profile");
+      // TODO : Envoyer les nouvelles données au store Redux
     } catch (error) {
       console.error("Erreur lors de la mise à jour du profil:", error);
     }

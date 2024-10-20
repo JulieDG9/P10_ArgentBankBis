@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import axios from "axios";
 
 const urlApi = "http://localhost:3001/api/v1";
@@ -70,7 +69,7 @@ export const getUserProfile = async () => {
       },
     });
     return response.data;
-  } catch (error) {
+  } catch {
     throw new Error("Échec de la récupération du profil utilisateur");
   }
 };
