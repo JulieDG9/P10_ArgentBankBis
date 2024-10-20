@@ -1,4 +1,3 @@
-// import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.scss";
 import logo from "../../assets/argentBankLogo.png";
@@ -10,7 +9,8 @@ import { authOut } from "../../app/slices/authSlice";
 
 export default function Header() {
   const token = useSelector((state) => state.auth.token);
-  const userName = "toto";//useSelector((state) => state.user.userName);
+  const userName = useSelector((state) => state.user.userName);
+  console.log(userName);
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
@@ -24,23 +24,23 @@ export default function Header() {
           <img src={logo} alt="Logo ArgentBank" />
         </Link>
         <nav>
-        {token ? 
-          <>
-            <Link to="/profile">
-            <FontAwesomeIcon icon={faCircleUser} />
-              {userName}
+          {token ? (
+            <>
+              <Link to="/profile">
+                <FontAwesomeIcon icon={faCircleUser} />
+                {userName}
+              </Link>
+              <Link to="/" className="link_SignOut" onClick={handleSignOut}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                Sign Out
+              </Link>
+            </>
+          ) : (
+            <Link to="/signin" className={styles.signIn}>
+              <FontAwesomeIcon icon={faCircleUser} />
+              Sign In
             </Link>
-            <Link to="/" className="link_SignOut" onClick={handleSignOut}>
-              <FontAwesomeIcon icon={faRightFromBracket} />
-              Sign Out
-            </Link>
-          </>
-          :
-          <Link to="/signin" className={styles.signIn}>
-            <FontAwesomeIcon icon={faCircleUser} />
-            Sign In
-          </Link>
-        }
+          )}
         </nav>
       </header>
     </div>
