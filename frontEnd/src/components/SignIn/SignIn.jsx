@@ -6,9 +6,7 @@ import styles from "./SignIn.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { loginUser } from "../../api/api";
-import { authSuccess, authRejected } from '../../app/slices/authSlice';
-
-
+import { authSuccess, authRejected } from "../../app/slices/authSlice";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -16,16 +14,17 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const responseLogin = await loginUser(email, password, rememberMe);
-      dispatch(authSuccess(responseLogin.body.token))
+      dispatch(authSuccess(responseLogin.body.token));
       navigate("/profile");
     } catch (error) {
       dispatch(authRejected());
-      //TODO : Afficher l'erreur dans le formulaire (voir la deuxième todo de cette page)
+      setError("Identifiants incorrects");
       console.error("login failed", error);
     }
   };
@@ -68,7 +67,7 @@ export default function Login() {
             />
             <label htmlFor="rememberMe">Remember me</label>
           </div>
-          {/* TODO : Ajouter un message d'erreur caché du genre "Identifiants incorrects" */}
+          <div className={styles.errorMessage}>{error}</div>
           <button type="submit" className={styles.btn}>
             Sign In
           </button>
