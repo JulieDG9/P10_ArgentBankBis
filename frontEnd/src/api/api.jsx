@@ -65,7 +65,6 @@ export const updateUserProfile = async (updatedData) => {
     console.log("Token récupéré :", token); // Vérifie si le token est récupéré
     if (!token) throw new Error("Utilisateur non authentifié");
 
-    // const response = await axios.put(`${urlApi}/user/profile`, updatedData, {
     const response = await axios.put(
       `${urlApi}/user/profile`,
       {
