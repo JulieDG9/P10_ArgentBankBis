@@ -11,7 +11,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     getUserSuccess: (state, action) => {
-      state.userName = action.payload.userName;
+      // Si userName n'est pas défini, on utilise firstName par défaut comme nom d'utilisateur.
+      state.userName = action.payload.userName || action.payload.firstName;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
     },
